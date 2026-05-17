@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PassAnalytiq - Password Checker</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <script src="analyzer-core.js" defer></script>
+  <script src="analyzer-ui.js" defer></script>
+  <link rel="stylesheet" href="analyzer.css" />
+</head>
+
+<body>
+  <header class="site-header">
+    <div class="shell header-inner">
+      <a class="brand" href="index.html" aria-label="PassAnalytiq home">
+        <span class="brand-logo" aria-hidden="true">
+          <svg viewBox="0 0 24 24" focusable="false">
+            <path class="brand-logo-shield" d="M12 2.5 20 5.8v6.1c0 5-3.2 8.4-8 9.7-4.8-1.3-8-4.7-8-9.7V5.8L12 2.5Z" />
+            <path class="brand-logo-lock" d="M8.5 11h.8V9.6a2.7 2.7 0 0 1 5.4 0V11h.8v5.1h-7V11Zm2.1 0h2.8V9.6a1.4 1.4 0 0 0-2.8 0V11Z" />
+          </svg>
+        </span>
+        <span>PassAnalytiq</span>
+      </a>
+      <nav class="nav" aria-label="Primary">
+        <a href="index.html" class="active">Analyzer</a>
+        <a href="generator.html">Generator</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="shell app-main">
+    <section class="intro">
+      <h1>Password Checker <span class="intro-tag">See how a password holds up.</span></h1>
+    </section>
+
+    <section class="panel">
+      <label class="field-label" for="passwordInput">Password</label>
+      <div class="input-row input-row--with-action">
+        <input type="password" id="passwordInput" autocomplete="off" autocorrect="off" autocapitalize="off"
+          spellcheck="false" placeholder="Enter a password" />
+        <button class="link-button" id="toggleVisibility" type="button">Show</button>
+        <button class="primary-button accent inline-action" id="analyzeBtn" type="button">Check Breach</button>
+      </div>
+      <div class="meter" aria-hidden="true">
+        <div class="meter-fill" id="strengthBar"></div>
+      </div>
+    </section>
+
+    <section class="panel result-panel" aria-live="polite">
+      <div class="strength-summary">
+        <div class="strength-hero">
+          <span>Strength</span>
+          <strong id="strengthLabel">-</strong>
+          <p id="mainReason" class="strength-reason">Start typing to see local analysis.</p>
+        </div>
+        <div class="summary-pills">
+          <div class="metric-pill">
+            <span>Score</span>
+            <strong id="scoreValue">-</strong>
+          </div>
+          <div class="metric-pill">
+            <span>Crack time</span>
+            <strong id="crackTimeValue">-</strong>
+          </div>
+        </div>
+      </div>
+
+      <div class="breach-card" id="breachCard" data-state="not_checked" aria-live="polite" aria-atomic="true">
+        <div class="breach-icon" id="breachIcon" aria-hidden="true">i</div>
+        <div class="breach-content">
+          <span class="breach-label">Breach exposure</span>
+          <div class="breach-line">
+            <strong id="breachStatus">Not checked</strong>
+            <strong id="breachCount" class="breach-count" hidden></strong>
+          </div>
+          <p id="breachMessage">Click Check Breach to see whether this password appears in known breach datasets.</p>
+        </div>
+      </div>
+
+      <div class="result-columns">
+        <div class="result-section">
+          <span class="section-label">Issues</span>
+          <div id="issuesList" class="issue-grid"></div>
+        </div>
+
+        <div class="result-section">
+          <span class="section-label">Recommendations</span>
+          <div id="recommendationsList" class="action-grid"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+
+</html>

@@ -1,0 +1,23 @@
+# =====================================================
+# Security headers for PassAnalytiq
+# Static hosting provider configuration (Netlify format)
+# =====================================================
+
+/*
+  # Content Security Policy
+  # Scripts are limited to same-origin files. Inline styles are allowed because
+  # the analyzer UI applies dynamic colors through element.style. Network
+  # access is limited to same-origin and the HIBP k-anonymity API.
+  Content-Security-Policy: default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://api.pwnedpasswords.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self'
+
+  # Clickjacking protection
+  X-Frame-Options: DENY
+
+  # Prevent MIME-type sniffing
+  X-Content-Type-Options: nosniff
+
+  # Referrer policy
+  Referrer-Policy: strict-origin-when-cross-origin
+
+  # Browser feature restrictions
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=()

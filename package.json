@@ -1,0 +1,14 @@
+{
+  "name": "passanalytiq",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Local-first password strength analyzer and generator.",
+  "scripts": {
+    "test": "npm run test:generator && npm run test:analyzer && npm run test:python && npm run test:consistency",
+    "test:generator": "node generator.test.js",
+    "test:analyzer": "node analyzer-core.test.js",
+    "test:analyzer-core": "node analyzer-core.test.js",
+    "test:python": "python test_analyzer.py",
+    "test:consistency": "python consistency_check.py"
+  }
+}

@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PassAnalytiq - Password Generator</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="generator.css" />
+  <script src="analyzer-core.js"></script>
+  <script src="generator.js" defer></script>
+</head>
+
+<body>
+  <header class="site-header">
+    <div class="shell header-inner">
+      <a class="brand" href="index.html" aria-label="PassAnalytiq home">
+        <span class="brand-logo" aria-hidden="true">
+          <svg viewBox="0 0 24 24" focusable="false">
+            <path class="brand-logo-shield" d="M12 2.5 20 5.8v6.1c0 5-3.2 8.4-8 9.7-4.8-1.3-8-4.7-8-9.7V5.8L12 2.5Z" />
+            <path class="brand-logo-lock" d="M8.5 11h.8V9.6a2.7 2.7 0 0 1 5.4 0V11h.8v5.1h-7V11Zm2.1 0h2.8V9.6a1.4 1.4 0 0 0-2.8 0V11Z" />
+          </svg>
+        </span>
+        <span>PassAnalytiq</span>
+      </a>
+      <nav class="nav" aria-label="Primary">
+        <a href="index.html">Analyzer</a>
+        <a href="generator.html" class="active">Generator</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="shell app-main">
+    <section class="intro">
+      <h1>Password Generator <span class="intro-tag">Make one that's hard to crack.</span></h1>
+    </section>
+
+    <section class="panel generator-unified" aria-live="polite">
+      <div class="mode-header">
+        <div class="segmented-control" id="modeToggle" role="tablist" aria-label="Generator mode">
+          <button class="segment active" id="modeRandomBtn" type="button" role="tab" aria-selected="true">Random Password</button>
+          <button class="segment" id="modePersonalBtn" type="button" role="tab" aria-selected="false">Personalized Password</button>
+          <button class="segment" id="modeSeedBtn" type="button" role="tab" aria-selected="false">Memory Seed</button>
+        </div>
+      </div>
+
+      <div class="generator-hero">
+        <span class="section-label">Generated password</span>
+        <div class="generated-row">
+          <div id="generatedOutput" class="generated-output">-</div>
+          <div class="generated-actions">
+            <button class="secondary-button" id="copyBtn" type="button">Copy</button>
+            <button class="primary-button accent" id="generateBtn" type="button">Generate</button>
+          </div>
+        </div>
+        <strong id="strengthBadge" class="strength-badge" hidden>-</strong>
+      </div>
+
+      <hr class="panel-divider" />
+
+      <div class="generator-settings">
+        <div class="mode-panel active" id="randomPanel">
+          <div class="settings-row">
+            <div class="settings-col">
+              <label class="field-label" for="randomLength">Length</label>
+              <div class="range-row">
+                <input type="range" id="randomLength" min="12" max="64" value="20" />
+                <strong id="randomLengthValue">20</strong>
+              </div>
+            </div>
+
+            <div class="settings-col">
+              <span class="field-label">Character options</span>
+              <div class="toggle-grid" aria-label="Character options">
+                <label class="toggle-card">
+                  <input type="checkbox" id="chkUpper" checked />
+                  <span>A-Z</span>
+                </label>
+                <label class="toggle-card">
+                  <input type="checkbox" id="chkLower" checked />
+                  <span>a-z</span>
+                </label>
+                <label class="toggle-card">
+                  <input type="checkbox" id="chkNumbers" checked />
+                  <span>0-9</span>
+                </label>
+                <label class="toggle-card">
+                  <input type="checkbox" id="chkSymbols" checked />
+                  <span>!@#</span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mode-panel" id="personalPanel">
+          <div>
+            <label class="field-label" for="customWordInput">Your words</label>
+            <div class="word-entry">
+              <input type="text" id="customWordInput" autocomplete="off" placeholder="Type a word you can remember" />
+              <button class="secondary-button" id="addWordBtn" type="button">Add</button>
+            </div>
+          </div>
+
+          <div class="word-tags" id="wordTags" aria-live="polite"></div>
+          <p class="warning-note" id="wordWarning" aria-live="polite"></p>
+        </div>
+
+        <div class="mode-panel" id="memorySeedPanel">
+          <div class="seed-grid">
+            <div>
+              <label class="field-label" for="seedWordInput">Memory word</label>
+              <input type="text" id="seedWordInput" autocomplete="off" placeholder="Example: Apple" />
+            </div>
+            <div>
+              <label class="field-label" for="accountLabelInput">Account</label>
+              <input type="text" id="accountLabelInput" autocomplete="off" placeholder="Optional: Facebook, Gmail, GitHub" />
+              <p class="field-help">Using a different website/app name creates a different password.</p>
+            </div>
+          </div>
+
+          <div>
+            <div class="length-header">
+              <label class="field-label" for="seedLength">Password length</label>
+              <strong id="seedLengthValue" class="length-pill">24 characters</strong>
+            </div>
+            <div class="range-row">
+              <input type="range" id="seedLength" min="16" max="48" value="24" />
+            </div>
+          </div>
+
+          <div class="seed-info-card" aria-label="Memory Seed guidance">
+            <div class="seed-info-row">
+              <span class="seed-info-dot" aria-hidden="true"></span>
+              <div>
+                <strong>Recreate later</strong>
+                <p>Same memory word + same website/app name = same password.</p>
+              </div>
+            </div>
+            <div class="seed-info-row">
+              <span class="seed-info-dot" aria-hidden="true"></span>
+              <div>
+                <strong>Use per account</strong>
+                <p>Change the website/app name to get a different password for each account.</p>
+              </div>
+            </div>
+            <div class="seed-info-row">
+              <span class="seed-info-dot" aria-hidden="true"></span>
+              <div>
+                <strong>Choose a private word</strong>
+                <p>Avoid common words like password, admin, love or qwerty.</p>
+              </div>
+            </div>
+          </div>
+
+          <p class="warning-note" id="seedWarning" aria-live="polite"></p>
+        </div>
+      </div>
+
+      <hr class="panel-divider" />
+
+      <div class="generator-metrics">
+        <div class="result-grid">
+          <div class="result-item">
+            <span>Strength</span>
+            <strong id="strengthLabel">-</strong>
+          </div>
+          <div class="result-item">
+            <span>Score</span>
+            <strong id="scoreValue">-</strong>
+          </div>
+          <div class="result-item">
+            <span>Length</span>
+            <strong id="lengthValue">-</strong>
+          </div>
+          <div class="result-item">
+            <span>Weaknesses</span>
+            <strong id="weaknessCount">-</strong>
+          </div>
+        </div>
+        <p class="tiny-note" id="personalNote" hidden>Includes crypto-secure randomness.</p>
+      </div>
+    </section>
+  </main>
+</body>
+
+</html>
